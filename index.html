@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2028학년도 대입 학업역량 강화 및 생성형 AI 입시 상담 시스템</title>
+  <!-- Google Fonts: Pretendard / Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f2b5c;
+      --primary-light: #1a4db8;
+      --primary-accent: #2563eb;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-sub: #f8fafc;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Noto Sans KR', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 상단 탑바 및 헤더 */
+    .top-announcement {
+      background: linear-gradient(90deg, #0f2b5c 0%, #1e3a8a 100%);
+      color: #e2e8f0;
+      padding: 8px 20px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .top-announcement a {
+      color: #93c5fd;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    .top-announcement a:hover {
+      color: #ffffff;
+    }
+
+    .main-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo-badge {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: var(--primary-accent);
+      font-weight: 800;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .logo-badge span {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary-light);
+    }
+    .header-title-box h1 {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.3px;
+    }
+    .header-title-box p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-header {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-header-secondary {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .btn-header-secondary:hover {
+      background: #e2e8f0;
+    }
+    .btn-header-primary {
+      background: var(--primary-light);
+      color: #ffffff;
+      border: none;
+    }
+    .btn-header-primary:hover {
+      background: var(--primary);
+    }
+
+    /* 탭 내비게이션 */
+    .nav-container {
+      background: var(--surface);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-tabs {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4px;
+      padding: 0 16px;
+      overflow-x: auto;
+    }
+    .nav-tab {
+      background: none;
+      border: none;
+      padding: 14px 18px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-tab:hover {
+      color: var(--primary-light);
+      background: rgba(37,99,235,0.04);
+    }
+    .nav-tab.active {
+      color: var(--primary-light);
+      border-bottom-color: var(--primary-light);
+      background: #ffffff;
+      font-weight: 700;
+    }
+    .nav-tab .badge-count {
+      background: #eff6ff;
+      color: var(--primary-light);
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    /* 메인 컨테이너 */
+    .main-content {
+      max-width: 1400px;
+      margin: 20px auto 40px auto;
+      padding: 0 16px;
+    }
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 공통 카드 & 레이아웃 */
+    .card-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-panel-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* 배지 & 태그 */
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+    .badge-primary { background: #dbeafe; color: #1e40af; }
+    .badge-accent { background: #e0e7ff; color: #3730a3; }
+    .badge-outline { background: #f8fafc; border: 1px solid #cbd5e1; color: #475569; }
+    .badge-success { background: #dcfce7; color: #166534; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+
+    .tag-rec {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11.5px;
+    }
+    .tag-warn {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #9f1239;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+    .tag-suneung {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    /* 버튼 공통 */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease-in-out;
+      border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--primary-light); color: #fff; }
+    .btn-primary:hover { background: var(--primary); }
+    .btn-outline { background: #fff; border-color: #cbd5e1; color: #334155; }
+    .btn-outline:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .btn-pdf { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
+    .btn-pdf:hover { background: #fee2e2; color: #991b1b; }
+    .btn-home { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+    .btn-home:hover { background: #dbeafe; color: #1e40af; }
+    .btn-recruit { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .btn-recruit:hover { background: #d1fae5; color: #065f46; }
+    .btn-remove { background: #f1f5f9; border: 1px solid #cbd5e1; color: #64748b; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 11px; }
+    .btn-remove:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+
+    /* ==============================================================
+       [모듈 1] 🤖 AI 채팅관 스타일
+       ============================================================== */
+    .ai-chat-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      height: 800px;
+    }
+    @media (max-width: 992px) {
+      .ai-chat-layout { grid-template-columns: 1fr; height: auto; }
+    }
+
+    .ai-sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      height: 100%;
+      overflow-y: auto;
+    }
+    .sidebar-section-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .chip-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      text-align: left;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+      line-height: 1.4;
+    }
+    .chip-btn:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: var(--primary-accent);
+      transform: translateX(2px);
+    }
+
+    .ai-chat-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-shadow: var(--shadow-sm);
+    }
+    .chat-panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border-top-left-radius: var(--radius);
+      border-top-right-radius: var(--radius);
+    }
+    .chat-panel-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chat-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--success);
+      font-weight: 600;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(5,150,105,0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(5,150,105,0); }
+      100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); }
+    }
+
+    .chat-messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: #ffffff;
+    }
+    .chat-msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 92%;
+    }
+    .chat-msg.user {
+      align-self: flex-end;
+    }
+    .chat-msg.ai {
+      align-self: flex-start;
+      max-width: 95%;
+    }
+    .msg-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .chat-msg.user .msg-header {
+      justify-content: flex-end;
+    }
+    .role-name {
+      font-weight: 700;
+      color: #334155;
+    }
+    .msg-bubble {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .chat-msg.user .msg-bubble {
+      background: #1a4db8;
+      color: #ffffff;
+      border-bottom-right-radius: 2px;
+      box-shadow: 0 2px 4px rgba(26,77,184,0.2);
+    }
+    .chat-msg.ai .msg-bubble {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: var(--text);
+      border-bottom-left-radius: 2px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 로딩 애니메이션 */
+    .typing-dots {
+      display: flex;
+      gap: 5px;
+      padding: 6px 0;
+    }
+    .typing-dots span {
+      width: 7px;
+      height: 7px;
+      background: #3b82f6;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+    }
+
+    /* AI 응답 서식 */
+    .ai-res-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .ai-res-header {
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+    }
+    .ai-res-section {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .sec-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f2b5c;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .styled-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .styled-list li {
+      position: relative;
+      padding-left: 14px;
+    }
+    .styled-list li::before {
+      content: '•';
+      position: absolute;
+      left: 2px;
+      color: #2563eb;
+      font-weight: 800;
+    }
+    .ai-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      margin: 6px 0;
+    }
+    .ai-table th {
+      background: #f1f5f9;
+      color: #334155;
+      text-align: left;
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      width: 150px;
+      font-weight: 600;
+    }
+    .ai-table td {
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+    }
+    .tip-box {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      color: #1e40af;
+      margin-top: 8px;
+      border-radius: 0 4px 4px 0;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .chat-input-bar {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border);
+      background: #ffffff;
+      display: flex;
+      gap: 10px;
+      border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+    }
+    .chat-input-field {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .chat-input-field:focus {
+      border-color: var(--primary-accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+    .btn-send {
+      background: var(--primary-light);
+      color: #ffffff;
+      border: none;
+      padding: 0 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-send:hover {
+      background: var(--primary);
+    }
+
+    /* ==============================================================
+       [모듈 2] 📊 시뮬레이터 스타일
+       ============================================================== */
+    .sim-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .control-box {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .control-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .input-field-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .input-number {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f2b5c;
+      outline: none;
+    }
+    .input-number:focus {
+      border-color: var(--primary-accent);
+    }
+    .input-subgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .percentile-badge {
+      background: linear-gradient(90deg, #eff6ff 0%, #e0e7ff 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: #1e3a8a;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .preset-btn-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .preset-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1e40af;
+    }
+
+    /* 시뮬레이터 결과 테이블 */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    .data-table th {
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    .data-table tr:hover td {
+      background: #f8fafc;
+    }
+    .diag-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .diag-safe { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .diag-fit { background: #dbeafe; color: #1d4ed8; border: 1px solid #93c5fd; }
+    .diag-reach { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    .diag-warn { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+    .btn-table-action {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e40af;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .btn-table-action:hover {
+      background: #1a4db8;
+      color: #ffffff;
+      border-color: #1a4db8;
+    }
+
+    /* ==============================================================
+       [모듈 3] 🏛️ 25개 대학 백과사전 & 비교 매트릭스
+       ============================================================== */
+    .compare-tray {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .compare-chips-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .compare-chip {
+      background: #ffffff;
+      border: 1px solid #93c5fd;
+      color: #1e40af;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: #ffffff;
+    }
+    .ai-compare-table th {
+      background: #f1f5f9;
+      color: #0f2b5c;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      text-align: left;
+    }
+    .ai-compare-table td {
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      vertical-align: top;
+      background: #ffffff;
+    }
+    .btn-group-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .btn-mini {
+      padding: 4px 8px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    /* 백과사전 카드 그리드 */
+    .encyclopedia-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .search-input {
+      padding: 8px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13.5px;
+      width: 280px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--primary-accent);
+    }
+    .encyclopedia-filter-group {
+      display: flex;
+      gap: 6px;
+    }
+    .encyclopedia-filter-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .encyclopedia-filter-btn.active {
+      background: #0f2b5c;
+      color: #ffffff;
+      border-color: #0f2b5c;
+    }
+
+    .univ-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 16px;
+    }
+    .univ-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.15s;
+    }
+    .univ-card:hover {
+      border-color: #93c5fd;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .univ-card.in-compare {
+      border: 2px solid #2563eb;
+      background: #f8faff;
+    }
+    .univ-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-card-compare {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-card-compare.btn-active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .univ-card-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0f2b5c;
+    }
+    .univ-card-gyogwa {
+      font-size: 13px;
+      color: #334155;
+    }
+    .univ-card-details {
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .univ-card-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    /* ==============================================================
+       [모듈 4] 📚 2022 개정 교육과정 & 세특 플래너
+       ============================================================== */
+    .track-selector-box {
+      margin-bottom: 20px;
+    }
+    .track-select-dropdown {
+      width: 100%;
+      max-width: 450px;
+      padding: 10px 14px;
+      font-size: 15px;
+      font-weight: 700;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      color: #0f2b5c;
+      outline: none;
+      cursor: pointer;
+    }
+    .track-select-dropdown:focus {
+      border-color: var(--primary-accent);
+    }
+
+    .track-summary-card {
+      background: linear-gradient(90deg, #f0fdf4 0%, #ecfdf5 100%);
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .track-summary-card h3 {
+      font-size: 17px;
+      color: #065f46;
+      margin-bottom: 6px;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .course-check-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .course-check-item:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+    .course-check-item.is-core {
+      border-left: 4px solid #ef4444;
+    }
+    .chk-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      font-size: 13px;
+    }
+
+    .planner-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .planner-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .planner-box label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f2b5c;
+    }
+    .planner-textarea {
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+    }
+    .planner-textarea:focus {
+      border-color: var(--primary-accent);
+    }
+    .btn-save {
+      background: #059669;
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-save:hover {
+      background: #047857;
+    }
+
+    /* ==============================================================
+       [모듈 5] 🧭 나침반 아카이브 스타일
+       ============================================================== */
+    .region-btn-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .rbtn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+    }
+    .rbtn.on {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card:hover {
+      border-color: #93c5fd;
+      transform: translateY(-2px);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-name {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #0f2b5c;
+    }
+    .card-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+    }
+    .link-btn {
+      padding: 6px 4px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-disabled {
+      background: #f1f5f9;
+      color: #94a3b8;
+      cursor: not-allowed;
+      border-color: #e2e8f0;
+    }
+
+    /* 푸터 */
+    .main-footer {
+      background: #0f2b5c;
+      color: #94a3b8;
+      padding: 30px 20px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      border-top: 1px solid #1e3a8a;
+      margin-top: 50px;
+    }
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-left h4 {
+      color: #ffffff;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .footer-links a {
+      color: #93c5fd;
+      text-decoration: none;
+      margin-right: 14px;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 최상단 공식 연동 공지 탑바 -->
+  <aside class="top-announcement" aria-label="출처 공지">
+    <div>
+      📢 <strong>[공식 데이터 연동 완료]</strong> 본 시스템은 <strong>경기도진학지도협의회</strong> '대학 정보 나침반' 및 <strong>수도권 상위 25개 대학 2028학년도 대학입학전형시행계획</strong> 공식 원본에 근거하여 작동합니다.
+    </div>
+    <div>
+      <a href="https://specialzoker.github.io/namdimban.html" target="_blank" rel="noopener">나침반 웹사이트 원본 ↗</a>
+    </div>
+  </aside>
+
+  <!-- 메인 헤더 -->
+  <header class="main-header">
+    <div class="header-branding">
+      <div class="logo-badge">
+        2028 대입
+        <span>5등급제 1세대</span>
+      </div>
+      <div class="header-title-box">
+        <h1>2028학년도 대입 학업역량 강화 & 생성형 AI 입시 상담 시스템</h1>
+        <p>경기도 일반고 기준 정밀 내신 진단 · 출결 감점표 · 수능최저 검증 · 2022 개정 권장과목 세특 가이드</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-header btn-header-secondary" onclick="window.print()">🖨️ 진단 리포트 인쇄</button>
+      <button class="btn-header btn-header-primary" onclick="switchTab('chat'); handleSendChat('경기도 일반고 5등급제 2028 대입 전체 핵심 전략을 브리핑해줘')">🤖 수석 컨설턴트 AI 브리핑</button>
+    </div>
+  </header>
+
+  <!-- 메인 네비게이션 탭 -->
+  <nav class="nav-container">
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-tab="chat" onclick="switchTab('chat')">
+        🤖 AI 입시 상담관 <span class="badge-count">Gemini/GPT 모드</span>
+      </button>
+      <button class="nav-tab" data-tab="calc" onclick="switchTab('calc')">
+        📊 5등급제 통합 시뮬레이터 <span class="badge-count">내신·출결·수능</span>
+      </button>
+      <button class="nav-tab" data-tab="compare" onclick="switchTab('compare')">
+        🏛️ 25개교 전형 백과 & 비교 <span class="badge-count">25개교 공식</span>
+      </button>
+      <button class="nav-tab" data-tab="curriculum" onclick="switchTab('curriculum')">
+        📚 2022 개정 과목 & 세특 플래너 <span class="badge-count">6대 계열</span>
+      </button>
+      <button class="nav-tab" data-tab="archive" onclick="switchTab('archive')">
+        🧭 대학 정보 나침반 아카이브 <span class="badge-count">전국 130+교</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- 메인 콘텐츠 영역 -->
+  <main class="main-content">
+
+    <!-- ==============================================================
+         [탭 1] 🤖 AI 입시 상담관 (Gemini/ChatGPT 스타일 RAG)
+         ============================================================== -->
+    <div id="pane-chat" class="tab-pane active">
+      <div class="ai-chat-layout">
+        <!-- 좌측 추천 프롬프트 및 학생 프로필 요약 -->
+        <aside class="ai-sidebar">
+          <div>
+            <div class="sidebar-section-title">🧑‍🎓 내 진단 프로필 (실시간 동기화)</div>
+            <div style="background:#f1f5f9; padding:12px; border-radius:8px; font-size:12.5px; line-height:1.5;">
+              <div>• <strong>소속:</strong> 경기도 일반고 2학년 (2026 기준)</div>
+              <div>• <strong>5등급제 내신:</strong> <span style="color:#1a4db8; font-weight:700;">1.65등급</span> (상위 17.2%)</div>
+              <div>• <strong>출결 상태:</strong> 결석 0일 / 지각·조퇴 2회</div>
+              <div>• <strong>모의 수능:</strong> 국2 · 수2 · 영2 · 사3 · 과2</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="sidebar-section-title">💡 자주 묻는 핵심 입시 질문</div>
+            <div class="quick-chips">
+              <button class="chip-btn" onclick="handleSendChat('경희대 미인정 지각 4회면 출결에서 감점되나요? 감점 기준 알려줘')">
+                ⏱️ 경희대 지각 4회 출결 감점 기준
+              </button>
+              <button class="chip-btn" onclick="handleSendChat('연세대와 고려대 2028 수시 학생부교과 전형 방법과 수능최저 비교해줘')">
+                ⚖️ 연세대 vs 고려대 2028 교과 비교
+              </button>
+              <button class="chip-btn" onclick="handleSendChat('현재 5등급제 내신 1.65등급으로 경기도 일반고에서 지원 가능한 상위권 대학은 어디야?')">
+                🎯 1.65등급 지원 안정/적정 대학
+              </button>
+              <button class="chip-btn" onclick="handleSendChat('2028학년도 수능 최저학력기준이 없는 상위권 대학 교과전형 다 알려줘')">
+                🚫 수능 최저 없는 상위권 대학 총정리
+              </button>
+              <button class="chip-btn" onclick="handleSendChat('컴퓨터공학 및 소프트웨어학과 진학을 위한 2022 개정 필수 권장과목은 뭐야?')">
+                💻 컴퓨터공학과 필수/권장 이수과목
+              </button>
+              <button class="chip-btn" onclick="handleSendChat('이화여대는 미인정 결석 2일이면 몇 점 감점돼? 왜 위험한지 설명해줘')">
+                ⚠️ 이화여대 결석 2일 대폭 감점 주의보
+              </button>
+              <button class="chip-btn" onclick="handleSendChat('정시 수능위주 전형에서 학생부 교과나 출결을 반영하는 대학 어디야?')">
+                🏛️ 정시 학생부 반영 9개 대학 현황
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top:auto; font-size:11.5px; color:#64748b; line-height:1.4; border-top:1px solid #e2e8f0; padding-top:10px;">
+            🔒 <strong>신뢰성 보장:</strong> 본 AI는 인터넷 뇌피셜이 아닌, 상위 25개 대학 입학처가 발표한 공식 2028 시행계획 원본 문서를 실시간 참조하여 답변합니다.
+          </div>
+        </aside>
+
+        <!-- 우측 메인 채팅 대화창 -->
+        <section class="ai-chat-panel">
+          <div class="chat-panel-header">
+            <div class="chat-panel-title">
+              <span>🤖 2028 대입 전문 수석 입학사정관 AI</span>
+            </div>
+            <div class="chat-status-indicator">
+              <span class="status-dot"></span>
+              25개교 2028 시행계획 RAG 엔진 가동 중
+            </div>
+          </div>
+
+          <div id="chat-messages" class="chat-messages-container">
+            <!-- 초기 환영 메시지 -->
+            <div class="chat-msg ai">
+              <div class="msg-header">
+                <span class="avatar">🤖</span>
+                <span class="role-name">2028 대입 전문 수석 입학상담관 AI</span>
+                <span class="time">안내</span>
+              </div>
+              <div class="msg-bubble">
+                <p><strong>반갑습니다! 2028학년도 5등급제 첫 대입을 치르는 2026년 현재 고2 경기도 일반고 학생을 위한 1:1 맞춤형 생성형 AI 입시 상담관입니다.</strong></p>
+                <p style="margin-top:8px;">
+                  본 시스템은 <strong>경기도진학지도협의회 대학 정보 나침반</strong> 및 <strong>수도권 상위 25개 주요 대학의 공식 2028학년도 입학전형시행계획</strong> 문서를 완벽 학습하였습니다.
+                </p>
+                <ul style="margin: 8px 0 8px 18px; font-size: 13px; line-height: 1.6;">
+                  <li><strong>대학별 5등급제 내신 환산식 & 안정/적정선:</strong> 서강대, 성균관대, 고려대, 동국대, 가천대 등 독자 공식 정밀 계산</li>
+                  <li><strong>미인정 지각·조퇴·결과 감점 진단:</strong> 경희대(지각 2회=1결석), 이화여대(결석 2일 -10점), 서강대(지각 3회=1결석) 등</li>
+                  <li><strong>2028 수능 최저학력기준 유무 & 특례:</strong> 연세대 논술 최저 신설, 서울대·고대·숙대 지균 최저 폐지 등</li>
+                  <li><strong>2022 개정 교육과정 권장과목 & 세특 연계:</strong> 계열별 핵심 이수 과목과 학업역량 강화 방안</li>
+                </ul>
+                <p style="font-size: 12.5px; color: #475569;">
+                  궁금하신 질문을 아래 입력창에 입력하시거나, 좌측 추천 질문 칩을 클릭해보세요! 각 답변에는 해당 대학의 <strong>공식 2028 시행계획 PDF 바로가기 링크</strong>가 함께 제공됩니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-bar">
+            <input type="text" id="chat-input" class="chat-input-field" placeholder="예: '고려대 2028 교과전형 수능최저랑 출결 감점 알려줘', '지각 4번인데 감점 안되는 대학 어디야?'..." />
+            <button class="btn-send" onclick="handleSendChat()">질문하기 ➔</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         [탭 2] 📊 5등급제 통합 시뮬레이터 (내신·출결·수능최저)
+         ============================================================== -->
+    <div id="pane-calc" class="tab-pane">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div>
+            <h2 class="card-panel-title">📊 5등급제 내신·출결·수능최저 3차원 합격 판정 시뮬레이터</h2>
+            <p class="card-panel-subtitle">경기도 일반고 기준 상위 25개 대학별 독자 5등급제 환산식 및 출결 감점표, 수능최저 충족 여부를 동시 판정합니다.</p>
+          </div>
+        </div>
+
+        <!-- 성적표 프리셋 버튼 -->
+        <div class="preset-btn-group">
+          <span style="font-size:12.5px; font-weight:700; color:#475569; align-self:center; margin-right:4px;">⚡ 원클릭 샘플 로드:</span>
+          <button class="preset-btn" onclick="loadSampleProfile('top')">🏆 최상위권 (내신 1.18 / 무결석·지각0 / 수능 1,1,1)</button>
+          <button class="preset-btn" onclick="loadSampleProfile('mid')">🎯 상위권 일반고 (내신 1.65 / 지각 2회 / 수능 2,2,2)</button>
+          <button class="preset-btn" onclick="loadSampleProfile('grow')">🚀 중상위권 역전도전 (내신 2.35 / 결석 1일, 지각 4회 / 수능 3,3,2)</button>
+        </div>
+
+        <!-- 입력 패널 그리드 -->
+        <div class="sim-controls-grid">
+          <!-- 1. 5등급제 내신 -->
+          <div class="control-box">
+            <div class="control-title">
+              <span>① 5등급제 내신 전과목 평균</span>
+              <span class="badge badge-primary">고1~고3</span>
+            </div>
+            <div class="input-field-group">
+              <label for="sim-gpa">평균 등급 입력 (1.00 ~ 5.00)</label>
+              <input type="number" id="sim-gpa" class="input-number" step="0.01" min="1.0" max="5.0" value="1.65" oninput="runSimulator()">
+            </div>
+            <p style="font-size:11.5px; color:#64748b; margin-top:6px;">
+              * 2028 대입부터 석차등급은 5등급제(1등급 10%, 2등급 24%)로 전면 개편됩니다.
+            </p>
+          </div>
+
+          <!-- 2. 미인정 출결 -->
+          <div class="control-box">
+            <div class="control-title">
+              <span>② 고교 3년간 미인정 출결</span>
+              <span class="badge badge-warning">질병/인정 제외</span>
+            </div>
+            <div class="input-subgrid">
+              <div class="input-field-group">
+                <label for="sim-abs">미인정 결석 (일)</label>
+                <input type="number" id="sim-abs" class="input-number" min="0" max="30" value="0" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-late">미인정 지각 (회)</label>
+                <input type="number" id="sim-late" class="input-number" min="0" max="30" value="2" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-early">미인정 조퇴 (회)</label>
+                <input type="number" id="sim-early" class="input-number" min="0" max="30" value="0" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-res">미인정 결과 (회)</label>
+                <input type="number" id="sim-res" class="input-number" min="0" max="30" value="0" oninput="runSimulator()">
+              </div>
+            </div>
+            <p style="font-size:11.5px; color:#d97706; margin-top:4px;">
+              * 경희대는 지각·조퇴 2회당 결석 1일, 이화여대는 2일 결석 시 10점 감점 처리됩니다.
+            </p>
+          </div>
+
+          <!-- 3. 모의 수능 등급 -->
+          <div class="control-box">
+            <div class="control-title">
+              <span>③ 2028 통합형 수능 모의 등급</span>
+              <span class="badge badge-accent">최저 판정용</span>
+            </div>
+            <div class="input-subgrid">
+              <div class="input-field-group">
+                <label for="sim-csat-kor">국어</label>
+                <input type="number" id="sim-csat-kor" class="input-number" min="1" max="9" value="2" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-csat-math">수학</label>
+                <input type="number" id="sim-csat-math" class="input-number" min="1" max="9" value="2" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-csat-eng">영어</label>
+                <input type="number" id="sim-csat-eng" class="input-number" min="1" max="9" value="2" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-csat-hist">한국사</label>
+                <input type="number" id="sim-csat-hist" class="input-number" min="1" max="9" value="2" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-csat-soc">통합사회</label>
+                <input type="number" id="sim-csat-soc" class="input-number" min="1" max="9" value="3" oninput="runSimulator()">
+              </div>
+              <div class="input-field-group">
+                <label for="sim-csat-sci">통합과학</label>
+                <input type="number" id="sim-csat-sci" class="input-number" min="1" max="9" value="2" oninput="runSimulator()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9등급제 환산 백분위 배너 -->
+        <div id="est-percentile-badge" class="percentile-badge">
+          5등급제 <strong>1.65등급</strong> ➔ 상위 누적 약 <strong>17.2%</strong> (구 9등급제 환산 약 <strong>2.0 ~ 2.4등급</strong> 수준)
+        </div>
+
+        <!-- 25개 대학 시뮬레이션 결과 표 -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="min-width:130px;">대학명</th>
+                <th style="min-width:180px;">교과 전형 및 방법</th>
+                <th style="text-align:center; min-width:140px;">대학별 5등급 환산점수</th>
+                <th style="text-align:center; min-width:150px;">미인정 출결 감점 진단</th>
+                <th style="text-align:center; min-width:160px;">2028 수능최저 판정</th>
+                <th style="text-align:center; min-width:120px;">일반고 합격선</th>
+                <th style="text-align:center; min-width:130px;">2028 지원 진단</th>
+                <th style="text-align:center; min-width:110px;">AI 정밀상담</th>
+              </tr>
+            </thead>
+            <tbody id="sim-result-tbody">
+              <!-- JS 동적 생성 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         [탭 3] 🏛️ 25개교 전형 백과사전 & 다중 대학 비교
+         ============================================================== -->
+    <div id="pane-compare" class="tab-pane">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div>
+            <h2 class="card-panel-title">🏛️ 2028 수도권 상위 25개 대학 전형 백과사전 & 다중 비교 매트릭스</h2>
+            <p class="card-panel-subtitle">최대 4개 대학을 나란히 배치하여 교과 산출식, 출결 감점표, 수능최저, 정시 학생부 반영 비율을 직접 대조합니다.</p>
+          </div>
+        </div>
+
+        <!-- 비교함 트레이 -->
+        <div class="compare-tray">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <strong style="color:#0f2b5c; font-size:13.5px;">⚖️ 현재 선택된 비교 대학 (최대 4개):</strong>
+            <div id="compare-tray-chips" class="compare-chips-list">
+              <!-- JS에서 생성 -->
+            </div>
+          </div>
+          <button class="btn btn-outline" style="font-size:12px; padding:4px 10px;" onclick="STATE.compareList=['snu','yonsei','korea','sogang']; renderCompareView();">
+            🔄 서연고서 프리셋
+          </button>
+        </div>
+
+        <!-- 다중 대학 비교 매트릭스 테이블 -->
+        <div id="compare-matrix-container" style="margin-bottom:30px;">
+          <!-- JS 렌더링 -->
+        </div>
+
+        <!-- 하단 25개 대학 전형 백과사전 카드 검색기 -->
+        <div class="card-panel-header" style="margin-top:30px;">
+          <div>
+            <h3 class="card-panel-title">📚 25개 대학 2028 공식 입학전형 상세 탐색기</h3>
+            <p class="card-panel-subtitle">각 대학 카드의 공식 PDF 버튼을 누르면 2028학년도 대학입학전형시행계획 원본 파일이 즉시 열립니다.</p>
+          </div>
+          <span id="encyclopedia-count-badge" class="badge badge-primary">25개교 표시 중</span>
+        </div>
+
+        <div class="encyclopedia-toolbar">
+          <input type="text" class="search-input" placeholder="대학명, 전형명, 수능최저 검색..." oninput="filterEncyclopedia(this.value)">
+          <div class="encyclopedia-filter-group">
+            <button class="encyclopedia-filter-btn active" data-region="ALL" onclick="filterEncyclopediaRegion('ALL')">전체</button>
+            <button class="encyclopedia-filter-btn" data-region="서울" onclick="filterEncyclopediaRegion('서울')">서울권 (21)</button>
+            <button class="encyclopedia-filter-btn" data-region="경기" onclick="filterEncyclopediaRegion('경기')">경기·인천권 (4)</button>
+          </div>
+        </div>
+
+        <div id="univ-encyclopedia-grid" class="univ-card-grid">
+          <!-- JS 동적 생성 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         [탭 4] 📚 2022 개정 교육과정 & 세특 플래너
+         ============================================================== -->
+    <div id="pane-curriculum" class="tab-pane">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div>
+            <h2 class="card-panel-title">📚 2022 개정 교육과정 계열별 권장과목 & 학생부(세특) 학업역량 플래너</h2>
+            <p class="card-panel-subtitle">2028 대입에서는 서울대·연세대·고려대 등 주요 대학이 고교 이수과목을 정량·정성 반영합니다.</p>
+          </div>
+        </div>
+
+        <!-- 계열 선택기 -->
+        <div class="track-selector-box">
+          <label for="curriculum-track-select" style="font-size:13.5px; font-weight:700; color:#0f2b5c; display:block; margin-bottom:8px;">
+            🎯 나의 희망 진로 및 목표 전공 계열 선택:
+          </label>
+          <select id="curriculum-track-select" class="track-select-dropdown" onchange="renderCurriculumTrack()">
+            <option value="eng" selected>공학·반도체·AI·컴퓨터 계열 (컴퓨터, 인공지능, 전기전자, 기계 등)</option>
+            <option value="med">의·약·치·한·수의학 계열 (의예, 약학, 치의예, 한의예, 수의예)</option>
+            <option value="nat">자연과학·생명·화학 계열 (수학, 물리학, 화학, 생명과학 등)</option>
+            <option value="biz">경영·경제·금융·상경 계열 (경영학, 경제학, 통계학, 금융 등)</option>
+            <option value="hum">인문·어문·교육 계열 (국어국문, 영어영문, 사학, 철학, 사범대 등)</option>
+            <option value="soc">사회과학·법·행정·미디어 계열 (정치외교, 행정학, 미디어커뮤니케이션, 심리학 등)</option>
+          </select>
+        </div>
+
+        <!-- 계열 요약 및 충실도 점수 -->
+        <div class="track-summary-card">
+          <h3 id="track-title">계열 정보 로딩 중...</h3>
+          <p id="track-desc" style="font-size:13px; color:#064e3b; line-height:1.5; margin-bottom:10px;">설명</p>
+          <div id="track-score-badge" style="font-size:14px; font-weight:700; color:#047857;">전공 이수 충실도 계산 중...</div>
+        </div>
+
+        <!-- 과목 선택 체크리스트 -->
+        <div style="margin:20px 0;">
+          <h4 style="font-size:14.5px; font-weight:700; color:#0f2b5c; margin-bottom:8px;">
+            📋 이수 과목 체크리스트 (클릭하여 이수 여부를 변경하세요)
+          </h4>
+          <p style="font-size:12px; color:#64748b; margin-bottom:10px;">
+            빨간색 띠는 상위 15개교 종합평가에서 필수 반영되는 <span style="color:#dc2626; font-weight:700;">핵심 필수과목</span>입니다.
+          </p>
+          <div id="track-checklist" class="checklist-grid">
+            <!-- JS 동적 생성 -->
+          </div>
+        </div>
+
+        <!-- 전공별 세특 전략 및 주안점 -->
+        <div id="track-strategy-box" class="tip-box" style="margin-bottom:26px;">
+          <!-- JS 동적 생성 -->
+        </div>
+
+        <!-- 세특 학업역량 플래너 (브라우저 저장) -->
+        <div style="border-top:2px solid #e2e8f0; padding-top:20px;">
+          <div class="card-panel-title" style="margin-bottom:6px;">
+            ✍️ 나만의 학생부 세특 & 탐구 학업역량 로드맵 (자동 저장)
+          </div>
+          <p style="font-size:12.5px; color:#64748b; margin-bottom:14px;">
+            학기별 교과 세특 발표 주제 및 전공 심화 탐구 프로젝트를 메모해두면 브라우저에 안전하게 보관됩니다.
+          </p>
+
+          <div class="planner-form-grid">
+            <div class="planner-box">
+              <label for="plan-g2s1">🌱 2학년 1학기: 핵심 개념 심화 & 진로 연계</label>
+              <textarea id="plan-g2s1" class="planner-textarea" placeholder="예: [미적분Ⅰ] 함수의 연속성을 활용한 알고리즘 복잡도 최적화 모델링 탐구 발표..."></textarea>
+            </div>
+            <div class="planner-box">
+              <label for="plan-g2s2">🌿 2학년 2학기: 융합 과제 연구 & 논문/도서 독서 연계</label>
+              <textarea id="plan-g2s2" class="planner-textarea" placeholder="예: [정보/물리학] 센서 데이터 필터링을 위한 행렬 연산과 파이썬 시뮬레이션 코드 구현..."></textarea>
+            </div>
+            <div class="planner-box">
+              <label for="plan-g3s1">🌳 3학년 1학기: 전공 역량 집대성 & 문제해결 프로젝트</label>
+              <textarea id="plan-g3s1" class="planner-textarea" placeholder="예: [인공지능수학] 딥러닝 역전파의 편미분 유도 과정 보고서 작성 및 학급 세미나 주도..."></textarea>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end;">
+            <button class="btn-save" onclick="savePlannerData()">💾 세특 플래너 로컬 저장하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==============================================================
+         [탭 5] 🧭 대학 정보 나침반 전국 130개교 아카이브
+         ============================================================== -->
+    <div id="pane-archive" class="tab-pane">
+      <div class="card-panel">
+        <div class="card-panel-header">
+          <div>
+            <h2 class="card-panel-title">🧭 경기도진학지도협의회 '대학 정보 나침반' 전국 130+개 대학 아카이브</h2>
+            <p class="card-panel-subtitle">경기도진학지도협의회 원본 데이터베이스와 100% 동기화된 전국 거점 국립대 및 주요 사립대 입학처·시행계획 연동 허브입니다.</p>
+          </div>
+          <span id="archive-count" class="badge badge-primary">총 130개 대학 수록</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+          <input type="text" class="search-input" placeholder="대학명 또는 지역 검색 (예: 고려, 부산, 충북, 아주...)" oninput="handleArchiveSearch(this.value)">
+          <div style="font-size:12px; color:#64748b;">
+            * 각 버튼을 클릭하면 새 창에서 공식 홈페이지 및 모집요강으로 연결됩니다.
+          </div>
+        </div>
+
+        <!-- 지역 필터 버튼들 -->
+        <div id="archive-region-btns" class="region-btn-group">
+          <!-- JS 동적 생성 -->
+        </div>
+
+        <!-- 대학 카드 그리드 -->
+        <div id="archive-cards-body" class="archive-grid">
+          <!-- JS 동적 생성 -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 메인 푸터 -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <h4>2028학년도 대입 학업역량 강화 및 생성형 AI 입시 상담 시스템</h4>
+        <p>경기도 일반고 학생을 위한 5등급제 맞춤형 진단 및 상위 25개교 공식 2028 시행계획 연동 플랫폼</p>
+        <p style="margin-top:8px; font-size:11.5px; color:#64748b;">
+          본 사이트에 수록된 입학전형 정보는 2026년 기준 각 대학이 한국대학교육협의회에 제출 및 공표한 2028학년도 대학입학전형시행계획 원본에 근거합니다.<br>
+          최종 세부 모집요강은 고3 5월 각 대학 입학처를 통해 반드시 재확인하시기 바랍니다.
+        </p>
+      </div>
+      <div class="footer-links">
+        <div style="font-weight:700; color:#cbd5e1; margin-bottom:8px;">공식 출처 & 유관 기관</div>
+        <div>
+          <a href="https://specialzoker.github.io/namdimban.html" target="_blank" rel="noopener">🧭 대학 정보 나침반 (경기도진학지도협의회)</a><br>
+          <a href="https://www.adiga.kr" target="_blank" rel="noopener">🏛️ 대입정보포털 어디가 (대교협)</a><br>
+          <a href="https://www.moe.go.kr" target="_blank" rel="noopener">📜 교육부 2028 대입개편안 확정고시</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 스크립트 파일 연동 (순서 필수: 1. 나침반DB -> 2. 2028시행계획DB -> 3. 코어앱로직) -->
+  <script src="compass_raw.js"></script>
+  <script src="data_2028.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
